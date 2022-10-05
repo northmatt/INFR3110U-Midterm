@@ -9,11 +9,11 @@ public class Subject {
     Observer observerTmp;
 
     //Send notifications if something has happened
-    public void Notify() {
+    public void Notify(int hashID) {
         //Notify all observers even though some may not be interested in what has happened
         //Each observer should check if it is interested in this event
         foreach (Observer curObserver in observers)
-            curObserver.OnNotify();
+            curObserver.OnNotify(hashID);
     }
 
     //Add observer to the list

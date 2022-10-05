@@ -2,11 +2,36 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum BellFunctions {
+    None,
+    changeShoot,
+    changeMove
+}
+
 public class Bell : MonoBehaviour {
-    //Given my coding, better to have shootFreq in GameController or detect TriggerEnter on player
-    //Coded in an weird manner for complete showcase of Singleton
-    //Also Singleton in GameController
+    public BellFunctions currentFunction = BellFunctions.None;
+
+    private void Start() {
+        if (Random.value > 0.5f)
+            GameController.instance.subject.AddObserver(new BellObserver(gameObject, new MoveFunction()));
+        else
+            GameController.instance.subject.AddObserver(new BellObserver(gameObject, new NoFunction()));
+
+        currentFunction = BellFunctions.changeShoot;
+    }
+
     private void OnTriggerEnter(Collider other) {
-        CharController.shootFrequency *= 1.5f;
+        switch (currentFunction) {
+            default:
+            case BellFunctions.None:
+                break;
+            case BellFunctions.changeShoot:
+                CharController.shootFrequency *= 1.5f;
+                break;
+            case BellFunctions.changeMove:
+                //Should have the component reference saved somewhere, prolly GameController
+                GameController.instance.player.GetComponent<CharController>().moveForce *= 1.5f;
+                break;
+        }
     }
 }

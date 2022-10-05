@@ -7,11 +7,17 @@ public class Bullet : MonoBehaviour {
     private void OnCollisionEnter(Collision other) {
         Destroy(gameObject);
 
-        if(other.collider.CompareTag("Player")) {
+        if(other.gameObject.CompareTag("Player")) {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
-        else if(other.collider.CompareTag("Enemy")) {
+        else if(other.gameObject.CompareTag("Enemy")) {
             Destroy(other.gameObject);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        if (other.gameObject.CompareTag("Finish")) {
+            GameController.instance.subject.Notify(other.gameObject.GetHashCode());
         }
     }
 }

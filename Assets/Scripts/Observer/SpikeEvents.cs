@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 
 //Events
-public abstract class SpikeEvents {
-    public abstract Color SpikeEditorColor();
+public abstract class BellEvents {
+    public abstract BellFunctions BellFunction();
 }
 
-public class YellowMat : SpikeEvents {
-    public override Color SpikeEditorColor() {
-        return Color.yellow;
+public class NoFunction : BellEvents {
+    public override BellFunctions BellFunction() {
+        return BellFunctions.None;
     }
 }
 
-public class GreenMat : SpikeEvents {
-    public override Color SpikeEditorColor() {
-        return Color.green;
+public class MoveFunction : BellEvents {
+    public override BellFunctions BellFunction() {
+        return BellFunctions.changeMove;
     }
 }
